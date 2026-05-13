@@ -284,7 +284,7 @@ english?</textarea>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="banner-data.js"></script>
+  <script src="banner-image-data.js"></script>
   <script>
     const BANNER_WIDTH = 2084;
     const BANNER_HEIGHT = 427;
@@ -501,7 +501,7 @@ english?</textarea>
           await exportBannerFallback();
         } catch (fallbackError) {
           console.error(fallbackError);
-          alert('Nie udało się wygenerować PNG. Sprawdź, czy plik banner-data.js lub banner.png jest dostępny obok HTML.');
+          alert('Nie udało się wygenerować PNG. Sprawdź, czy plik banner-image-data.js lub banner.png jest dostępny obok HTML.');
         }
       }
     });
