@@ -288,7 +288,8 @@ english?</textarea>
   <script>
     const BANNER_WIDTH = 2084;
     const BANNER_HEIGHT = 427;
-    const BANNER_SRC = window.BANNER_DATA_URL || 'banner.png';
+    const BANNER_SRC = 'banner.png?v=' + Date.now();
+    const BANNER_FALLBACK_SRC = window.BANNER_DATA_URL || 'banner.png';
 
     const els = {
       text: document.getElementById('text'),
@@ -359,6 +360,11 @@ english?</textarea>
       setAspectRatio();
       renderText();
       els.bannerImage.src = BANNER_SRC;
+      els.bannerImage.onerror = () => {
+        if (els.bannerImage.src !== BANNER_FALLBACK_SRC) {
+          els.bannerImage.src = BANNER_FALLBACK_SRC;
+        }
+      };
       els.bannerImage.style.objectFit = 'fill';
     }
 
@@ -398,7 +404,13 @@ english?</textarea>
       output.height = BANNER_HEIGHT;
 
       const ctx = output.getContext('2d');
-      const banner = await loadImage(BANNER_SRC);
+      let banner;
+
+      try {
+        banner = await loadImage(BANNER_SRC);
+      } catch (error) {
+        banner = await loadImage(BANNER_FALLBACK_SRC);
+      }
       const accentWords = els.coloredWords.value
         .split(',')
         .map(word => word.trim().toUpperCase())
